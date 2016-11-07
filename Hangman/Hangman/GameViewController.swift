@@ -16,22 +16,35 @@ class GameViewController: UIViewController {
     var incorrectGuesses: UILabel = UILabel()
     var guessTextField: UITextField = UITextField()
     var guessBtn: UIButton = UIButton()
+    var image: UIImageView = UIImageView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
         self.view.backgroundColor = UIColor.white
         // Do any additional setup after loading the view.
         let hangmanPhrases = HangmanPhrases()
         self.phrase = hangmanPhrases.getRandomPhrase()
         print(self.phrase)
+
+        let image = UIImage(named: "hangman1")
+        self.image.image = image
+        self.view.addSubview(self.image)
+        self.image.translatesAutoresizingMaskIntoConstraints = false
+        self.image.topAnchor.constraint(greaterThanOrEqualTo: self.view.topAnchor, constant: CGFloat(100.0)).isActive = true
+        self.image.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        self.image.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        self.image.widthAnchor.constraint(equalToConstant: CGFloat(100)).isActive = true
         
         self.guessLabel.text = self.guessString()
         self.guessLabel.font = UIFont(name: "HelveticaNeue-UltraLight", size: 25)
         self.guessLabel.textAlignment = NSTextAlignment.center
         self.view.addSubview(self.guessLabel)
         self.guessLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.guessLabel.topAnchor.constraint(greaterThanOrEqualTo: self.view.topAnchor, constant: CGFloat(100.0)).isActive = true
+        self.guessLabel.topAnchor.constraint(greaterThanOrEqualTo: self.image.topAnchor, constant: CGFloat(150.0)).isActive = true
         self.guessLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         self.guessLabel.heightAnchor.constraint(equalToConstant: 70).isActive = true
         self.guessLabel.widthAnchor.constraint(equalToConstant: CGFloat(300)).isActive = true
@@ -84,6 +97,7 @@ class GameViewController: UIViewController {
     }
     
     func guessString() -> String {
+        self.guessTextField.resignFirstResponder()
         var correctGuesses: [String] = Array()
         var guessString = ""
         for char in self.phrase.characters {
@@ -107,13 +121,33 @@ class GameViewController: UIViewController {
             }
         }
         
+        var numIncorrect = 0
         var incorrectGuesses = "Incorrect Guesses: "
         for guess in self.guesses {
             if !correctGuesses.contains(guess) {
                 incorrectGuesses += guess + " "
+                numIncorrect += 1
             }
         }
         self.incorrectGuesses.text = incorrectGuesses
+        
+        switch numIncorrect {
+        case 0:
+            self.image.image = UIImage(named: "hangman1")
+        case 1:
+            self.image.image = UIImage(named: "hangman2")
+        case 2:
+            self.image.image = UIImage(named: "hangman3")
+        case 3:
+            self.image.image = UIImage(named: "hangman4")
+        case 4:
+            self.image.image = UIImage(named: "hangman5")
+        case 5:
+            self.image.image = UIImage(named: "hangman6")
+        default:
+            self.image.image = UIImage(named: "hangman7")
+        }
+        
         return guessString
     }
     
@@ -143,12 +177,30 @@ class GameViewController: UIViewController {
             return
         }
         self.guessTextField.text = ""
-        var charToGuess = String(text.characters.suffix(1))
+        let charToGuess = String(text.characters.suffix(1))
         if self.guesses.contains(charToGuess) {
             return
         } else {
             self.guesses.append(charToGuess)
             self.guessLabel.text = self.guessString()
+        }
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0{
+                self.view.frame.origin.y -= keyboardSize.height
+            }
+        }
+        
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y != 0{
+                self.view.frame.origin.y += keyboardSize.height
+            }
         }
     }
     
