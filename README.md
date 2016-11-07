@@ -15,7 +15,7 @@ You **must** have these views and features.
 
 ###  Start Screen View 
 - [x] A UILabel with the name of the game
-- [ ] A "New Game" Button (takes you to Game View)
+- [x] A "New Game" Button (takes you to Game View)
 
 ###  Game View
 - [ ] A UILabel that displays the "_"s corresponding to each word in the provided puzzle string

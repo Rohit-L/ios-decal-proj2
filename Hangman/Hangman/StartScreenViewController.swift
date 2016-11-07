@@ -12,22 +12,18 @@ class StartScreenViewController: UIViewController {
     
     var text: UITextField = UITextField()
     var gameTitle: UILabel = UILabel()
+    var startGameBtn: UIButton = UIButton()
+    
+    func startNewGameButtonPressed(sender: UIBarButtonItem) {
+        print("Start Button Pressed")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-//        self.text.placeholder = "Enter ToDo Item"
-//        self.text.borderStyle = UITextBorderStyle.roundedRect
-//        self.view.addSubview(self.text)
-//        self.text.translatesAutoresizingMaskIntoConstraints = false
-//        self.text.topAnchor.constraint(greaterThanOrEqualTo: self.view.topAnchor, constant: CGFloat(100.0)).isActive = true
-//        self.text.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-//        self.text.heightAnchor.constraint(equalToConstant: 30).isActive = true
-//        self.text.widthAnchor.constraint(equalToConstant: CGFloat(300)).isActive = true
-        
-        self.gameTitle.text = "HangMan";
-        self.gameTitle.font = UIFont(name: "HelveticaNeue-UltraLight", size: 60)
+        self.gameTitle.text = "HangMan"
+        self.gameTitle.font = UIFont(name: "HelveticaNeue-UltraLight", size: 65)
         self.gameTitle.textAlignment = NSTextAlignment.center
         self.view.addSubview(self.gameTitle)
         self.gameTitle.translatesAutoresizingMaskIntoConstraints = false
@@ -35,6 +31,23 @@ class StartScreenViewController: UIViewController {
         self.gameTitle.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         self.gameTitle.heightAnchor.constraint(equalToConstant: 70).isActive = true
         self.gameTitle.widthAnchor.constraint(equalToConstant: CGFloat(300)).isActive = true
+        
+        self.startGameBtn.setTitle("Start New Game", for: UIControlState.normal)
+        self.startGameBtn.setTitleColor(UIColor.black, for: UIControlState.normal)
+        self.startGameBtn.setTitleColor(UIColor.blue, for: UIControlState.highlighted)
+        self.startGameBtn.titleLabel!.font = UIFont(name: "HelveticaNeue-Light", size: 25)
+        self.startGameBtn.titleLabel!.textAlignment = NSTextAlignment.center
+        self.startGameBtn.backgroundColor = .clear
+        self.startGameBtn.layer.cornerRadius = 5
+        self.startGameBtn.layer.borderWidth = 1
+        self.startGameBtn.layer.borderColor = UIColor.black.cgColor
+        self.startGameBtn.addTarget(self, action: #selector(StartScreenViewController.startNewGameButtonPressed(sender:)), for: .touchUpInside)
+        self.view.addSubview(self.startGameBtn)
+        self.startGameBtn.translatesAutoresizingMaskIntoConstraints = false
+        self.startGameBtn.topAnchor.constraint(greaterThanOrEqualTo: gameTitle.topAnchor, constant: CGFloat(200.0)).isActive = true
+        self.startGameBtn.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        self.startGameBtn.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        self.startGameBtn.widthAnchor.constraint(equalToConstant: CGFloat(300)).isActive = true
         
     }
 
