@@ -14,7 +14,7 @@ We have provided you code to interact with the list of phrases, but you will imp
 You **must** have these views and features. 
 
 ###  Start Screen View 
-- [ ] A UILabel with the name of the game
+- [x] A UILabel with the name of the game
 - [ ] A "New Game" Button (takes you to Game View)
 
 ###  Game View
