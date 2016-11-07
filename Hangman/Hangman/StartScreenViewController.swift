@@ -15,13 +15,15 @@ class StartScreenViewController: UIViewController {
     var startGameBtn: UIButton = UIButton()
     
     func startNewGameButtonPressed(sender: UIBarButtonItem) {
-        print("Start Button Pressed")
+        self.navigationController?.pushViewController(GameViewController(), animated: true)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.view.backgroundColor = UIColor.white
+        
         self.gameTitle.text = "HangMan"
         self.gameTitle.font = UIFont(name: "HelveticaNeue-UltraLight", size: 65)
         self.gameTitle.textAlignment = NSTextAlignment.center

@@ -18,12 +18,12 @@ You **must** have these views and features.
 - [x] A "New Game" Button (takes you to Game View)
 
 ###  Game View
-- [ ] A UILabel that displays the "_"s corresponding to each word in the provided puzzle string
-- [ ] A UILabel that displays the incorrect guesses thus far
-- [ ] A TextField (where the user enters a letter as a guess)
-- - [ ] The user should only be able to guess a single letter
-- [ ] A "Guess" button which determines whether the letter entered in the textfield is correct or not, and updates the game accordingly
-- - [ ] If that letter appears in the puzzle string, the corresponding "_" should be replaced by the correctly guessed letter
+- [x] A UILabel that displays the "_"s corresponding to each word in the provided puzzle string
+- [x] A UILabel that displays the incorrect guesses thus far
+- [x] A TextField (where the user enters a letter as a guess)
+- - [x] The user should only be able to guess a single letter
+- [x] A "Guess" button which determines whether the letter entered in the textfield is correct or not, and updates the game accordingly
+- - [x] If that letter appears in the puzzle string, the corresponding "_" should be replaced by the correctly guessed letter
 - - [ ] If that letter does not appear in the puzzle string, that letter should be added to a UILabel keeping track of "Incorrect Guesses: ", and the Hangman image should update to represent the number of incorrect guesses
 - [ ] A square-dimensioned UIImageView that represents the "state" of the Hangman, with appropriate images for each "state"
 
