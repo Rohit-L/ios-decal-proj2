@@ -53,6 +53,8 @@ class GameViewController: UIViewController {
         
         self.incorrectGuesses.text = "No Incorrect Guesses Yet!"
         self.incorrectGuesses.font = UIFont(name: "HelveticaNeue-UltraLight", size: 25)
+        self.incorrectGuesses.lineBreakMode = .byWordWrapping
+        self.incorrectGuesses.numberOfLines = 0
         self.incorrectGuesses.textAlignment = NSTextAlignment.center
         self.view.addSubview(self.incorrectGuesses)
         self.incorrectGuesses.translatesAutoresizingMaskIntoConstraints = false
@@ -98,6 +100,7 @@ class GameViewController: UIViewController {
     
     func guessString() -> String {
         self.guessTextField.resignFirstResponder()
+        var wonGame = true
         var correctGuesses: [String] = Array()
         var guessString = ""
         for char in self.phrase.characters {
@@ -117,12 +120,17 @@ class GameViewController: UIViewController {
                     guessString += String(char)
                 } else {
                     guessString += "_"
+                    wonGame = false
                 }
             }
         }
         
+        if wonGame {
+            self.gameWon()
+        }
+        
         var numIncorrect = 0
-        var incorrectGuesses = "Incorrect Guesses: "
+        var incorrectGuesses = "Incorrect Guesses:\n"
         for guess in self.guesses {
             if !correctGuesses.contains(guess) {
                 incorrectGuesses += guess + " "
@@ -146,6 +154,7 @@ class GameViewController: UIViewController {
             self.image.image = UIImage(named: "hangman6")
         default:
             self.image.image = UIImage(named: "hangman7")
+            self.gameLost()
         }
         
         return guessString
@@ -167,10 +176,6 @@ class GameViewController: UIViewController {
         sender.text = text.capitalized
     }
     
-    func disableKeyboard(sender: UITextField) {
-        sender.resignFirstResponder()
-    }
-    
     func guessCharacter(sender: UIButton) {
         var text = self.guessTextField.text!
         if text == "" {
@@ -184,6 +189,10 @@ class GameViewController: UIViewController {
             self.guesses.append(charToGuess)
             self.guessLabel.text = self.guessString()
         }
+    }
+    
+    func disableKeyboard(sender: UITextField) {
+        sender.resignFirstResponder()
     }
     
     func keyboardWillShow(notification: NSNotification) {
@@ -204,6 +213,30 @@ class GameViewController: UIViewController {
         }
     }
     
+    func alert(message: String, title: String = "") {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(OKAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func gameWon() {
+        let alertController = UIAlertController(title: "Nice Job!", message: "You have won the game.", preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "Play Again", style: .default, handler: {(action: UIAlertAction) -> Void in
+            (self.navigationController?.pushViewController(GameViewController(), animated: false))!
+        })
+        alertController.addAction(OKAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func gameLost() {
+        let alertController = UIAlertController(title: "Uh oh!", message: "You have lost the game.", preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "Play Again", style: .default, handler: {(action: UIAlertAction) -> Void in
+            (self.navigationController?.pushViewController(GameViewController(), animated: false))!
+        })
+        alertController.addAction(OKAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
 
     /*
     // MARK: - Navigation

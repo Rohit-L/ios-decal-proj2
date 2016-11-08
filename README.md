@@ -28,11 +28,11 @@ You **must** have these views and features.
 - [x] A square-dimensioned UIImageView that represents the "state" of the Hangman, with appropriate images for each "state"
 
 ### Finished Game States, Start New Game
-- [ ] A win state, indicated by an Alert (Pop up box)
-- - [ ] Should prevent additional guesses
-- [ ] A fail state, indicated by an Alert (Pop up box)
-- - [ ] Should prevent additional guesses
-- [ ] A "Start Over" button, which starts a new game
+- [x] A win state, indicated by an Alert (Pop up box)
+- - [x] Should prevent additional guesses
+- [x] A fail state, indicated by an Alert (Pop up box)
+- - [x] Should prevent additional guesses
+- [x] A "Start Over" button, which starts a new game
 
 ## Optional
 
